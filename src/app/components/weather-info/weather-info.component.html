@@ -5,7 +5,11 @@
     </h2>
     <div class="text-center">
         <span class="font-semibold text-lg">{{ location?.name }}</span>
-        <i class="bi bi-star-fill text-yellow-500 ml-2 cursor-pointer"></i>
+        @if(isFavorite) {
+            <i class="bi bi-star-fill text-yellow-500 ml-2 cursor-pointer" (click)="handleFavoriteClick()"></i>
+        } @else {
+            <i class="bi bi-star text-gray-400 ml-2 cursor-pointer" (click)="handleFavoriteClick()"></i>
+        }
         <div class="text-gray-600">
             {{ location?.admin1 }}, {{ location?.country }}
         </div>
