@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
-    path: 'weather',
+    path: '',
     loadComponent: () => import('./pages/weather/weather.component').then((m) => m.WeatherComponent),
   },
   {
@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: 'weather',
     pathMatch: 'full',
   },
 ];

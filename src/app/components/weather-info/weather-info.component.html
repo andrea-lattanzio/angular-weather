@@ -1,1 +1,51 @@
-<p>weather-info works!</p>
+@if(weatherInfo$ | async; as weatherInfo) {
+  <div class="mt-8 border-2 border-gray-800 bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-2xl font-bold text-center mb-4">
+        Current weather
+    </h2>
+    <div class="text-center">
+        <span class="font-semibold text-lg">{{ location?.name }}</span>
+        <i class="bi bi-star-fill text-yellow-500 ml-2 cursor-pointer"></i>
+        <div class="text-gray-600">
+            {{ location?.admin1 }}, {{ location?.country }}
+        </div>
+    </div>
+    <div class="mt-8 grid grid-cols-2 gap-4">
+        <div class="flex items-center p-4 border rounded-lg bg-gray-50">
+            <i class="bi bi-thermometer sun text-2xl text-yellow-600 mr-2"></i>
+            <div>
+                <span class="font-semibold">Temperature:</span>
+                <span class="block text-lg">{{ weatherInfo.current?.temperature_2m }}°C</span>
+            </div>
+        </div>
+        <div class="flex items-center p-4 border rounded-lg bg-gray-50">
+            <i class="bi bi-water text-2xl text-blue-500 mr-2"></i>
+            <div>
+                <span class="font-semibold">Humidity:</span>
+                <span class="block text-lg">{{ weatherInfo.current?.relative_humidity_2m }}%</span>
+            </div>
+        </div>
+        <div class="flex items-center p-4 border rounded-lg bg-gray-50">
+            <i class="bi bi-cloud-drizzle text-2xl text-gray-600 mr-2"></i>
+            <div>
+                <span class="font-semibold">Precipitation:</span>
+                <span class="block text-lg">{{ weatherInfo.current?.precipitation }} mm</span>
+            </div>
+        </div>
+        <div class="flex items-center p-4 border rounded-lg bg-gray-50">
+            <i class="bi bi-clouds text-2xl text-gray-500 mr-2"></i>
+            <div>
+                <span class="font-semibold">Cloud Cover:</span>
+                <span class="block text-lg">{{ weatherInfo.current?.cloud_cover }}%</span>
+            </div>
+        </div>
+        <div class="flex items-center p-4 border rounded-lg bg-gray-50">
+            <i class="bi bi-wind text-2xl text-green-500 mr-2"></i>
+            <div>
+                <span class="font-semibold">Wind Speed:</span>
+                <span class="block text-lg">{{ weatherInfo.current?.wind_speed_10m }} km/h</span>
+            </div>
+        </div>
+    </div>
+  </div>  
+}

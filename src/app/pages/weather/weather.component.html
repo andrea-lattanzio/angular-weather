@@ -1,1 +1,15 @@
-sas
+<app-searchbar (onLocationChange)="handleLocationChange($event)"></app-searchbar>
+@if(selectedLocation) {
+  <div class="flex mt-4 space-x-4">
+    <app-weather-info [location]="selectedLocation" class="flex-1"></app-weather-info>
+    <app-temperature-graph [location]="selectedLocation" class="flex-1"></app-temperature-graph>
+  </div>
+} @else {
+  <div class="mt-5 flex items-center justify-center">
+    <div class="flex flex-col items-center justify-center p-4 border rounded-md border-gray-300 bg-gray-50">
+        <i class="bi bi-geo-alt text-4xl text-gray-600 mb-2"></i>
+        <h2 class="text-xl font-semibold text-gray-800">Choose a Location</h2>
+        <p class="text-gray-500">Please select a location to view the weather information.</p>
+    </div>
+  </div>
+}

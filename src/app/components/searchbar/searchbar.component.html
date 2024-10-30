@@ -1,1 +1,21 @@
-<p>searchbar works!</p>
+<div class="flex items-center justify-center">
+  <div class="relative w-full max-w-md">
+    <input
+      type="text"
+      placeholder="Search..."
+      [(ngModel)]=chosenLocation
+      #locationInput
+      class="block w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring"
+      (click)="toggleSuggestions()"
+    />
+    @if(suggestions) {
+      <div class="absolute left-0 right-0 z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
+        <ul>
+          <li *ngFor="let location of locations$ | async" class="p-2 hover:bg-gray-100 cursor-pointer" (click)="handleLocationClik(location)">
+            {{ location.name }}, {{location.admin1}}, {{location.country}}
+          </li>
+        </ul>
+      </div>
+    }
+  </div>
+</div>
