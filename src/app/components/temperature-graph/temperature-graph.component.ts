@@ -51,16 +51,17 @@ export class TemperatureGraphComponent implements OnChanges {
   loadChartData(temperatures: WeatherData): void {
     if (!temperatures.hourly) return;
     this.chartLabels = temperatures.hourly.time
-      .slice(new Date().getHours(), 24)
+      .slice(new Date().getHours(), new Date().getHours()+25)
       .map((date) =>
         new Date(date).toLocaleTimeString([], {
           hour: '2-digit',
           minute: '2-digit',
         })
       );
+    console.log(this.chartLabels);
     this.chartValues = temperatures.hourly.temperature_2m.slice(
       new Date().getHours(),
-      24
+      new Date().getHours()+24
     );
     this.renderChart();
   }
@@ -74,7 +75,7 @@ export class TemperatureGraphComponent implements OnChanges {
         labels: this.chartLabels,
         datasets: [
           {
-            label: 'Temperature Forecast',
+            label: 'Temperature',
             data: this.chartValues,
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderColor: 'rgba(75, 192, 192, 1)',
