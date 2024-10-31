@@ -33,8 +33,7 @@ export class SearchbarComponent implements AfterViewInit, OnDestroy {
   suggestions: boolean = true;
 
   onLocationChange = output<LocationInfoSimplified>();
-  elementRef: any;
-
+  
   /**
    * declaring an observable out of the searchbar element
    * the observable emits each time an input is detected, with a debounce of 200ms

@@ -3,35 +3,6 @@ import { ChartOptions } from 'chart.js';
 export const weatherParams: string =
   'temperature_2m,relative_humidity_2m,is_day,precipitation,cloud_cover,wind_speed_10m';
 
-export const lineChartOptions: ChartOptions<'line'> = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: true,
-      position: 'top',
-    },
-    title: {
-      display: true,
-      text: 'Temperature in the Next 24 Hours',
-    },
-  },
-  scales: {
-    x: {
-      title: {
-        display: true,
-        text: 'Time',
-      },
-    },
-    y: {
-      title: {
-        display: true,
-        text: 'Temperature (°C)',
-      },
-      beginAtZero: false,
-    },
-  },
-};
-
 export interface WeatherData {
   latitude: number;
   longitude: number;

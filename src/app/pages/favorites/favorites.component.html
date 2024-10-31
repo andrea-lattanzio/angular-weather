@@ -1,1 +1,31 @@
-<p>favorites works!</p>
+@if(favorites$ | async; as favorites) {
+  @if(favorites.length > 0) {
+    <div class="flex mt-4">
+      <div class="w-1/2 pr-4">
+        <ul class="space-y-4">
+          <li *ngFor="let favorite of favorites" class="cursor-pointer">
+            <app-favorite-location [location]="favorite" (onLocationChange)="handleLocationChange($event)"></app-favorite-location>
+          </li>
+        </ul>
+      </div>
+
+      <div class="w-1/2 pl-4 flex flex-col justify-center">
+        @if(selectedLocation) {
+          <app-weather-info [location]="selectedLocation" class="flex-1" (onLocationChange)="handleLocationChange($event)"></app-weather-info>
+        } @else {
+          <div class="flex items-center justify-center h-full p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50">
+            <p class="text-lg font-semibold text-gray-700">Please choose from one of your favorite locations.</p>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="mt-5 flex items-center justify-center">
+      <div class="flex flex-col items-center justify-center p-4 border rounded-md border-gray-300 bg-gray-50">
+        <i class="bi bi-exclamation-diamond text-4xl text-gray-600 mb-2"></i>
+        <h2 class="text-xl font-semibold text-gray-800">Add a Favorite Location</h2>
+        <p class="text-gray-500">You have no favorite locations saved.</p>
+      </div>
+    </div>
+  }
+}

@@ -3,6 +3,7 @@ import {
   inject,
   Input,
   OnChanges,
+  output,
   SimpleChanges,
 } from '@angular/core';
 import { LocationInfoSimplified } from '../../interfaces/location';
@@ -24,6 +25,7 @@ export class WeatherInfoComponent implements OnChanges {
   isFavorite!: boolean;
 
   @Input() location!: LocationInfoSimplified | undefined;
+  onLocationChange = output<LocationInfoSimplified | undefined>();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['location'].currentValue) return;
@@ -37,8 +39,9 @@ export class WeatherInfoComponent implements OnChanges {
   }
 
   handleFavoriteClick(): void {
-    if(this.localStorageSrv.isFavorite(this.location!)){
+    if(this.localStorageSrv.isFavorite(this.location!)) {
       this.localStorageSrv.remove(this.location!);
+      this.onLocationChange.emit(undefined);
     } else {
       this.localStorageSrv.add(this.location!);
     }
