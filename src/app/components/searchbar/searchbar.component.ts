@@ -36,12 +36,12 @@ export class SearchbarComponent implements AfterViewInit, OnDestroy {
   
   /**
    * declaring an observable out of the searchbar element
-   * the observable emits each time an input is detected, with a debounce of 200ms
+   * the observable emits each time an input is detected, with a debounce of 300ms
    * when the observable emits, refreshLocations method is called
    */
   ngAfterViewInit(): void {
     fromEvent(this.locationInput.nativeElement, 'input')
-      .pipe(debounceTime(200), takeUntilDestroyed(this.destroyed))
+      .pipe(debounceTime(300), takeUntilDestroyed(this.destroyed))
       .subscribe((_) => this.refreshLocations(this.locationInput.nativeElement.value));
   }
 

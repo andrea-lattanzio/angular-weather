@@ -25,19 +25,34 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class TemperatureGraphComponent implements OnChanges {
   destroyed = inject(DestroyRef);
   weatherSrv = inject(WeatherService);
+  // observable stream containing temperature forecast for the selected location
   temperatureForecast$ = this.weatherSrv.temperatureForecast$;
-  
-  private chartInstance: Chart | null = null; 
+
+  // chart instance, chart labels and values
+  private chartInstance: Chart | null = null;
   private chartLabels: string[] = [];
   private chartValues: number[] = [];
 
+  // Input property for receiving selected location from parent component
   @Input() location!: LocationInfoSimplified | undefined;
 
+  /**
+   * Responds to location input property changes.
+   * When the location changes, it fetches the temperature forecast
+   * and updates the chart data.
+   *
+   * @param changes
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if (!changes['location'].currentValue) return;
     this.getTemperatureForecast();
   }
 
+  /**
+   * Fetches temperature forecast data by calling the WeatherService.
+   * Subscribes to the temperatureForecast$ observable and, once data is
+   * received, loads the data into the chart using loadChartData.
+   */
   private getTemperatureForecast(): void {
     this.weatherSrv.getLocationTemperatures(this.location!);
     this.temperatureForecast$
@@ -48,10 +63,17 @@ export class TemperatureGraphComponent implements OnChanges {
       });
   }
 
+  /**
+   * Extracts and formats the temperature data for a 24-hour period.
+   * Sets the chart labels and values, then calls renderChart to
+   * display the updated data.
+   *
+   * @param temperatures - contains hourly temperature data
+   */
   loadChartData(temperatures: WeatherData): void {
     if (!temperatures.hourly) return;
     this.chartLabels = temperatures.hourly.time
-      .slice(new Date().getHours(), new Date().getHours()+25)
+      .slice(new Date().getHours(), new Date().getHours() + 25)
       .map((date) =>
         new Date(date).toLocaleTimeString([], {
           hour: '2-digit',
@@ -61,11 +83,16 @@ export class TemperatureGraphComponent implements OnChanges {
     console.log(this.chartLabels);
     this.chartValues = temperatures.hourly.temperature_2m.slice(
       new Date().getHours(),
-      new Date().getHours()+24
+      new Date().getHours() + 24
     );
     this.renderChart();
   }
 
+  /**
+   * Initializes and renders the chart
+   * Destroys any existing chart instance
+   * Creates a new Chart instance
+   */
   renderChart(): void {
     Chart.register(...registerables);
     this.chartInstance ? this.chartInstance.destroy() : null;

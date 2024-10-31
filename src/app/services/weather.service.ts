@@ -15,6 +15,7 @@ import { weatherParams, WeatherData } from '../interfaces/weather';
   providedIn: 'root',
 })
 export class WeatherService {
+  // BehaviorSubject stores a list of locations which is then expsed an an observable to ensure readonly access 
   private _locations$ = new BehaviorSubject<LocationInfoSimplified[] | null>(null);
   locations$ = this._locations$.asObservable();
 
@@ -29,11 +30,11 @@ export class WeatherService {
   constructor() {}
 
   /**
-   * fetching location names from open-meteo GET /search endpoint
-   * simplifying data type
-   * stopping emission in case the api returns undefined
-   * emitting fetched locations to observer objects (searchbar)
-   * @param locationName location name to look for
+   * Fetching location names from open-meteo GET /search endpoint
+   * Simplifying data type
+   * Stopping emission in case the api returns undefined
+   * Emitting fetched locations to observer objects (searchbar)
+   * @param locationName - Location name to look for
    */
   getLocations(locationName: string): void {
     const params = new HttpParams().set('name', locationName);
@@ -68,10 +69,19 @@ export class WeatherService {
       });
   }
 
+  /**
+   * Removing Suggested Locations when searchbar is destroyed
+   */
   cleanLocations(): void {
     this._locations$.next(null);
   }
 
+  /**
+   * Getting CURRENT weather data for the chosen location from open-meteo GET /forecast endpoint
+   * Once the data is returned the observable emits to its subscribers (weather-info component)
+   * 
+   * @param locationInfo - Currently selected location
+   */
   getLocationWeather(locationInfo: LocationInfoSimplified): void {
     let params = new HttpParams()
       .set('latitude', locationInfo.latitude)
@@ -89,6 +99,12 @@ export class WeatherService {
       });
   }
 
+  /**
+   * Getting HOURLY temperature forecast for the chosen location from the open-meteo GET /forecast endpoint
+   * Once the data is returned the observable emits to its subscribers (temperature-graph component)
+   * 
+   * @param locationInfo - Currently selected location
+   */
   getLocationTemperatures(locationInfo: LocationInfoSimplified): void {
     let params = new HttpParams()
       .set('latitude', locationInfo.latitude)

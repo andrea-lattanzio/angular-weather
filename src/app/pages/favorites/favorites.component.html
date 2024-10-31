@@ -4,14 +4,14 @@
       <div class="w-1/2 pr-4">
         <ul class="space-y-4">
           <li *ngFor="let favorite of favorites" class="cursor-pointer">
-            <app-favorite-location [location]="favorite" (onLocationChange)="handleLocationChange($event)"></app-favorite-location>
+            <app-favorite-location [location]="favorite" (onLocationChange)="handleEmission($event)"></app-favorite-location>
           </li>
         </ul>
       </div>
 
       <div class="w-1/2 pl-4 flex flex-col justify-center">
         @if(selectedLocation) {
-          <app-weather-info [location]="selectedLocation" class="flex-1" (onLocationChange)="handleLocationChange($event)"></app-weather-info>
+          <app-weather-info [location]="selectedLocation" class="flex-1" (onFavoriteClick)="handleEmission($event)"></app-weather-info>
         } @else {
           <div class="flex items-center justify-center h-full p-4 border border-gray-300 rounded-lg shadow-md bg-gray-50">
             <p class="text-lg font-semibold text-gray-700">Please choose from one of your favorite locations.</p>
