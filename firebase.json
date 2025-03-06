@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/raintonic-weather/browser",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
